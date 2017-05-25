@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ceshi</title>
+  <subtitle>测试咯</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-05-25T08:24:14.694Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>mouse yuan</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>简单认识闭包</title>
+    <link href="http://yoursite.com/2017/05/25/new-article/"/>
+    <id>http://yoursite.com/2017/05/25/new-article/</id>
+    <published>2017-05-25T08:06:48.000Z</published>
+    <updated>2017-05-25T08:24:14.694Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-什么是闭包"><a href="#1-什么是闭包" class="headerlink" title="1.什么是闭包"></a>1.什么是闭包</h2><blockquote>
+<p>一个具有封闭的对外不公开的，包裹结构，或空间，js中的闭包就是函数。</p>
+</blockquote>
+<h2 id="2-闭包原理"><a href="#2-闭包原理" class="headerlink" title="2.闭包原理"></a>2.闭包原理</h2><blockquote>
+<p>闭包的原理就是作用域访问原则，上级作用域无法直接访问下级作用域中的变量。</p>
+</blockquote>
+<h2 id="3-闭包要解决什么问题？"><a href="#3-闭包要解决什么问题？" class="headerlink" title="3.闭包要解决什么问题？"></a>3.闭包要解决什么问题？</h2><blockquote>
+<p>闭包内的数据不允许外界访问，要解决的问题就是间接访问该数据。</p>
+</blockquote>
+<h2 id="4-使用闭包获取多个数据"><a href="#4-使用闭包获取多个数据" class="headerlink" title="4. 使用闭包获取多个数据"></a>4. 使用闭包获取多个数据</h2><pre><code>function foo(){
+    var name = &apos;张国荣&apos;;
+    var age = 18;
+    return function(){
+        return name + &quot;:&quot; + age;
+    }
+}
+var getName = foo();
+console.log(getName());
+</code></pre><p>或者返回数组形式：</p>
+<pre><code>function foo(){
+    var name = &apos;张国荣&apos;;
+    var age = 18;
+    return [
+    function(){
+        return name;
+    },
+    function(){
+        return age;
+    }
+    ]
+}
+var getName = foo();
+console.log(getName[0]());
+console.log(getName[1]());
+</code></pre><p>或者使用对象获取：</p>
+<pre><code>function foo(){
+    var name = &apos;张国荣&apos;;
+    var age = 18;
+    return {
+        getName:function(){
+            return name;
+        },
+        getAge:function(){
+            return age;
+        }
+    }
+}
+var obj = foo();
+console.log(obj.getName());
+console.log(obj.getAge());
+</code></pre><h2 id="5-使用对象返回多个方法来获取并设置值"><a href="#5-使用对象返回多个方法来获取并设置值" class="headerlink" title="5.使用对象返回多个方法来获取并设置值"></a>5.使用对象返回多个方法来获取并设置值</h2><pre><code>function foo(){
+    var name = &apos;hehe&apos;;
+    var gender = &apos;male&apos;;
+    return {
+        getName:function(){
+            return name;
+        },
+        setName:function(value){
+            name = value;
+            return name;
+        },
+        getGender:function(){
+            return gender;
+        },
+        setSpeed:function(value){
+            speed = value;
+            return speed;
+        }
+    }
+}
+var obj = foo();
+console.log(obj.getName());
+console.log(obj.getGender());
+obj.setName(&quot;xixi&quot;);
+console.log(obj.getName());
+</code></pre><h2 id="6-闭包的作用"><a href="#6-闭包的作用" class="headerlink" title="6.闭包的作用"></a>6.闭包的作用</h2><blockquote>
+<p>作用：<br>1 可以通过闭包返回的函数或者方法，来修改函数内部的数据<br>2 创建一个私有的空间，保护数据<br>3 外部想要访问数据，只能通过函数提供的方法<br>4 在提供的方法中，我们可以设置一些校验逻辑，让数据变得更加安全</p>
+</blockquote>
+<pre><code>function foo(){
+        var name = &quot;潘明&quot;;
+        var badLevel = -1000000000000000000000000000000000;
+        return {
+            getName: function () {
+                return name;
+            },
+            setName: function (value) {
+                name = value;
+                return name;
+            },
+            getBadLevel:function(){
+                return badLevel;
+            },
+            setBadLevel:function (value) {
+                //在函数外部想要修改数据
+                //只能通过函数内部的方法
+                //我们可以在函数内部定义的这个方法里
+                //设置安全措施，校验之类的操作
+                //可以保证系统的安全性和稳定性
+                if(value &gt; 0 ){
+                    throw &quot;你敢说我坏！！！&quot;;
+                }
+
+                badLevel = value;
+                return badLevel;
+            }
+        }
+    }
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-什么是闭包&quot;&gt;&lt;a href=&quot;#1-什么是闭包&quot; class=&quot;headerlink&quot; title=&quot;1.什么是闭包&quot;&gt;&lt;/a&gt;1.什么是闭包&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;一个具有封闭的对外不公开的，包裹结构，或空间，js中的闭包就是函数。&lt;/p
+    
+    </summary>
+    
+    
+      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+  </entry>
+  
+</feed>
