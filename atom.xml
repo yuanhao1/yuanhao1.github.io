@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>ceshi</title>
-  <subtitle>测试咯</subtitle>
+  <title>元宝爱吃肉</title>
+  <subtitle>就算不能全栈，也要全沾！</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
@@ -9,7 +9,7 @@
   <id>http://yoursite.com/</id>
   
   <author>
-    <name>mouse yuan</name>
+    <name>原浩(MouseYuan)</name>
     
   </author>
   
