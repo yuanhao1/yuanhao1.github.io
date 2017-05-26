@@ -5,15 +5,107 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-25T08:24:14.694Z</updated>
+  <updated>2017-05-26T10:06:00.902Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
-    <name>原浩(MouseYuan)</name>
+    <name>原浩(Mouse·Yuan)</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>javascript对原型的理解</title>
+    <link href="http://yoursite.com/2017/05/26/my-article2/"/>
+    <id>http://yoursite.com/2017/05/26/my-article2/</id>
+    <published>2017-05-26T10:02:50.000Z</published>
+    <updated>2017-05-26T10:06:00.902Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-什么是原型"><a href="#1-什么是原型" class="headerlink" title="1.什么是原型"></a>1.什么是原型</h2><blockquote>
+<p>在构造函数创建出来的时候，系统会默认的帮构造函数创建并关联一个神秘的对象，这个对象就是原型，原型默认的是一个空的对象。</p>
+</blockquote>
+<h2 id="2-原型的作用"><a href="#2-原型的作用" class="headerlink" title="2.原型的作用"></a>2.原型的作用</h2><blockquote>
+<p>原型中的属性和方法，可以被使用该构造函数创建出来的对象所使用。</p>
+</blockquote>
+<h2 id="3-如何访问构造函数中的原型"><a href="#3-如何访问构造函数中的原型" class="headerlink" title="3.如何访问构造函数中的原型"></a>3.如何访问构造函数中的原型</h2><blockquote>
+<p>构造函数.prototype</p>
+</blockquote>
+<h2 id="4-如何给原型对象添加属性和方法"><a href="#4-如何给原型对象添加属性和方法" class="headerlink" title="4.如何给原型对象添加属性和方法"></a>4.如何给原型对象添加属性和方法</h2><blockquote>
+<p>使用对象的动态特性</p>
+</blockquote>
+<h2 id="5-原型链"><a href="#5-原型链" class="headerlink" title="5.原型链"></a>5.原型链</h2><blockquote>
+<p>对象的原型指向原型对象，形成原型链</p>
+</blockquote>
+<pre><code>  //constructor: 原型对象内的一个属性，指向该原型对象相关联的构造函数
+   //\__proto__:原型对象对象中的属性,可以使用 对象.__proto__ 去访问原型对象
+
+&lt;script&gt;
+    // 动物 --》 人 --》老师 --》坏老师
+    function Animal(){
+        this.gender = &quot;male&quot;;
+    }
+    Human.prototype = new Animal();
+    Human.prototype.constructor = Human;
+    function Human(){
+        this.actionWay = &quot;走路&quot;;
+    }
+    Teacher.prototype = new Human();
+    Teacher.prototype.constructor = Teacher;
+    function Teacher(){
+        this.skill = &quot;教书&quot;;
+    }
+    BadTeacher.prototype = new Teacher();
+    BadTeacher.prototype.constructor = BadTeacher;
+    function BadTeacher(){
+        this.name = &quot;chris&quot;;
+    }
+    var t = new BadTeacher();
+    console.log(t);
+    console.log(t.__proto__);
+    console.log(t.__proto__.__proto__);
+    console.log(t.__proto__.__proto__.__proto__);
+    console.log(t.__proto__.__proto__.__proto__.__proto__); // object
+    console.log(t.__proto__.__proto__.__proto__.__proto__.__proto__); // 对象的原型还是一个对象 所以是Object 不是null
+    console.log(t.__proto__.__proto__.__proto__.__proto__.__proto__.__proto__); // null
+&lt;/script&gt;
+</code></pre><p>结果：<br><img src="http://img.blog.csdn.net/20170503135435084?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjY0OTkyNDc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>总结：</p>
+<blockquote>
+<p>当使用对象去访问属性和方法的时候，会首先在对象自己内部进行查找，如果找到了，就直接使用。如果没有找到，就去原型中查找，查找到之后，使用。如果原型中还没有， 如果是属性，就是undefined，如果是方法，就报错。</p>
+</blockquote>
+<pre><code>// 定义构造函数
+   function Person(name, status) {
+        this.name = name;
+        this.status = status;
+        this.act = function () {
+            console.log(&quot;演戏&quot;);
+        };
+        this.exercise = function () {
+            console.log(&quot;就不强身健体，就要保卫祖国&quot;);
+        }
+    }
+    // 初始化 创建构造函数
+var p = new Person(&quot;xyz&quot;,&quot;single&quot;);
+// 添加原型方法
+Person.prototype.exercise = function () {
+        console.log(&quot;强身健体，保卫祖国&quot;);
+    }
+// 该构造函数创建出来的对象访问原型方法
+   p.exercise();
+  console.log(Person.prototype); // Object
+  console.log(p.prototype);  // undefined
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-什么是原型&quot;&gt;&lt;a href=&quot;#1-什么是原型&quot; class=&quot;headerlink&quot; title=&quot;1.什么是原型&quot;&gt;&lt;/a&gt;1.什么是原型&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在构造函数创建出来的时候，系统会默认的帮构造函数创建并关联一个神秘的对象，
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>简单认识闭包</title>

@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="元宝的blog，元宝爱吃肉,Mouse·Yuan's blog"><title>javascript对原型的理解 | 元宝爱吃肉</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">javascript对原型的理解</h1><a id="logo" href="/.">元宝爱吃肉</a><p class="description">就算不能全栈，也要全沾！</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索..."></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">javascript对原型的理解</h1><div class="post-meta"><span class="date">May 26, 2017</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i> Hits</i></i></span><a href="/2017/05/26/my-article2/#comments" class="comment-count"><a id="uyan_count_unit" href="/2017/05/26/my-article2/"></a> 留言</a></div><div class="post-content"><h2 id="1-什么是原型"><a href="#1-什么是原型" class="headerlink" title="1.什么是原型"></a>1.什么是原型</h2><blockquote>
+<p>在构造函数创建出来的时候，系统会默认的帮构造函数创建并关联一个神秘的对象，这个对象就是原型，原型默认的是一个空的对象。</p>
+</blockquote>
+<h2 id="2-原型的作用"><a href="#2-原型的作用" class="headerlink" title="2.原型的作用"></a>2.原型的作用</h2><blockquote>
+<p>原型中的属性和方法，可以被使用该构造函数创建出来的对象所使用。</p>
+</blockquote>
+<h2 id="3-如何访问构造函数中的原型"><a href="#3-如何访问构造函数中的原型" class="headerlink" title="3.如何访问构造函数中的原型"></a>3.如何访问构造函数中的原型</h2><blockquote>
+<p>构造函数.prototype</p>
+</blockquote>
+<h2 id="4-如何给原型对象添加属性和方法"><a href="#4-如何给原型对象添加属性和方法" class="headerlink" title="4.如何给原型对象添加属性和方法"></a>4.如何给原型对象添加属性和方法</h2><blockquote>
+<p>使用对象的动态特性</p>
+</blockquote>
+<h2 id="5-原型链"><a href="#5-原型链" class="headerlink" title="5.原型链"></a>5.原型链</h2><blockquote>
+<p>对象的原型指向原型对象，形成原型链</p>
+</blockquote>
+<pre><code>  //constructor: 原型对象内的一个属性，指向该原型对象相关联的构造函数
+   //\__proto__:原型对象对象中的属性,可以使用 对象.__proto__ 去访问原型对象
+
+&lt;script&gt;
+    // 动物 --》 人 --》老师 --》坏老师
+    function Animal(){
+        this.gender = &quot;male&quot;;
+    }
+    Human.prototype = new Animal();
+    Human.prototype.constructor = Human;
+    function Human(){
+        this.actionWay = &quot;走路&quot;;
+    }
+    Teacher.prototype = new Human();
+    Teacher.prototype.constructor = Teacher;
+    function Teacher(){
+        this.skill = &quot;教书&quot;;
+    }
+    BadTeacher.prototype = new Teacher();
+    BadTeacher.prototype.constructor = BadTeacher;
+    function BadTeacher(){
+        this.name = &quot;chris&quot;;
+    }
+    var t = new BadTeacher();
+    console.log(t);
+    console.log(t.__proto__);
+    console.log(t.__proto__.__proto__);
+    console.log(t.__proto__.__proto__.__proto__);
+    console.log(t.__proto__.__proto__.__proto__.__proto__); // object
+    console.log(t.__proto__.__proto__.__proto__.__proto__.__proto__); // 对象的原型还是一个对象 所以是Object 不是null
+    console.log(t.__proto__.__proto__.__proto__.__proto__.__proto__.__proto__); // null
+&lt;/script&gt;
+</code></pre><p>结果：<br><img src="http://img.blog.csdn.net/20170503135435084?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjY0OTkyNDc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>总结：</p>
+<blockquote>
+<p>当使用对象去访问属性和方法的时候，会首先在对象自己内部进行查找，如果找到了，就直接使用。如果没有找到，就去原型中查找，查找到之后，使用。如果原型中还没有， 如果是属性，就是undefined，如果是方法，就报错。</p>
+</blockquote>
+<pre><code>// 定义构造函数
+   function Person(name, status) {
+        this.name = name;
+        this.status = status;
+        this.act = function () {
+            console.log(&quot;演戏&quot;);
+        };
+        this.exercise = function () {
+            console.log(&quot;就不强身健体，就要保卫祖国&quot;);
+        }
+    }
+    // 初始化 创建构造函数
+var p = new Person(&quot;xyz&quot;,&quot;single&quot;);
+// 添加原型方法
+Person.prototype.exercise = function () {
+        console.log(&quot;强身健体，保卫祖国&quot;);
+    }
+// 该构造函数创建出来的对象访问原型方法
+   p.exercise();
+  console.log(Person.prototype); // Object
+  console.log(p.prototype);  // undefined
+</code></pre></div><div class="tags"></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2017/05/25/new-article/" class="next">简单认识闭包</a></div><div id="comments"><div id="uyan_frame"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-什么是原型"><span class="toc-text">1.什么是原型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-原型的作用"><span class="toc-text">2.原型的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-如何访问构造函数中的原型"><span class="toc-text">3.如何访问构造函数中的原型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-如何给原型对象添加属性和方法"><span class="toc-text">4.如何给原型对象添加属性和方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-原型链"><span class="toc-text">5.原型链</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/my-article2/">javascript对原型的理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/new-article/">简单认识闭包</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/javascript/" style="font-size: 15px;">javascript</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://www.baidu.com/" title="百度" target="_blank">百度</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">原浩(Mouse·Yuan).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1006843030519956000";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script src="http://v2.uyan.cc/code/uyan.js?uid=2134787"></script></body></html>
