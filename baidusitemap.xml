@@ -4,6 +4,40 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/05/27/new-article5/</loc>
+    <lastmod>2017-05-27T02:02:17.359Z</lastmod>
+    <data>
+        <display>
+        <title>new article5</title>
+        <pubTime>2017-05-27T02:00:30.000Z</pubTime>
+        
+        <tag>javascript</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/05/27/new-article4/</loc>
+    <lastmod>2017-05-27T02:02:03.223Z</lastmod>
+    <data>
+        <display>
+        <title>使用Jquery动态创建表格</title>
+        <pubTime>2017-05-27T01:54:24.000Z</pubTime>
+        
+        <tag>javascript jquery</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/05/26/my-article2/</loc>
     <lastmod>2017-05-26T10:06:00.902Z</lastmod>
     <data>
