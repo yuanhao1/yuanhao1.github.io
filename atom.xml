@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-04T03:32:21.952Z</updated>
+  <updated>2017-07-04T09:29:38.908Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,106 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用servlet完成下载（解决中文乱码）</title>
+    <link href="http://yoursite.com/2017/07/04/article7/"/>
+    <id>http://yoursite.com/2017/07/04/article7/</id>
+    <published>2017-07-04T09:21:02.000Z</published>
+    <updated>2017-07-04T09:29:38.908Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="使用servlet完成下载文件"><a href="#使用servlet完成下载文件" class="headerlink" title="使用servlet完成下载文件"></a>使用servlet完成下载文件</h1><h2 id="创建页面"><a href="#创建页面" class="headerlink" title="创建页面"></a>创建页面</h2><pre><code>&lt;a href=&quot;/web14/download?filename=美女.jpg&quot;&gt;美女.jpg&lt;/a&gt;
+</code></pre><h2 id="书写核心servlet"><a href="#书写核心servlet" class="headerlink" title="书写核心servlet"></a>书写核心servlet</h2><pre><code>package com.itheima.line;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import sun.management.resources.agent;
+import sun.misc.BASE64Encoder;
+/**
+ * 下载Servlet 解决下载文件名乱码 
+  * @author hao.yuan
+ * @date 2017年7月4日
+ * @version V1.0    
+ */
+public class downloadServlet extends HttpServlet {
+
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // 获取要下载的文件的名称
+    // fileName如果是中文，要解决乱码
+    String fileName = request.getParameter(&quot;filename&quot;);
+    fileName = new String(fileName.getBytes(&quot;ISO8859-1&quot;),&quot;UTF-8&quot;);//美女.jpg
+    // 获取请求头中User-Agent
+    String agent = request.getHeader(&quot;User-Agent&quot;);
+    // 根据不同的客户端进行不同的编码 
+    String filenameEncoder = &quot;&quot;;
+    if (agent.contains(&quot;MSIE&quot;)) {
+        // IE浏览器
+        filenameEncoder = URLEncoder.encode(fileName, &quot;utf-8&quot;);
+        filenameEncoder = fileName.replace(&quot;+&quot;, &quot; &quot;);
+    } else if (agent.contains(&quot;Firefox&quot;)) {
+        // 火狐浏览器
+        BASE64Encoder base64Encoder = new BASE64Encoder();
+        filenameEncoder = &quot;=?utf-8?B?&quot; + base64Encoder.encode(fileName.getBytes(&quot;utf-8&quot;)) + &quot;?=&quot;;
+    } else {
+        // 其它浏览器
+        filenameEncoder = URLEncoder.encode(fileName, &quot;utf-8&quot;);
+    }    
+    // 要下载文件的类型 - 客户端通过文件的MIME类型区别类型
+    response.setContentType(this.getServletContext().getMimeType(fileName));
+    // 告诉客户端该文件不是直接解析，而是以附件形式打开
+    response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment;filename=&quot; + filenameEncoder);
+    // 获取文件的绝对路径
+    String path = this.getServletContext().getRealPath(&quot;download/&quot; + fileName);
+    // 获得该文件的输入流
+    InputStream in = new FileInputStream(path);
+    // 获取输出流
+    ServletOutputStream out = response.getOutputStream();
+    // 文件拷贝模板
+    int len = 0;
+    byte[] buffer = new byte[1024];
+    while ((len = in.read(buffer)) &gt; 0) {
+        out.write(buffer, 0, len);
+    }
+    in.close();
+    out.close();
+
+}
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    doGet(request, response);
+}
+}
+</code></pre><p> 注意</p>
+<blockquote>
+<p>1 资源文件例如美女,jpg存放在webContent/download/美女.jpg<br>2下载要设置头，setHeader，setContentType<br>3根据浏览器不同如IE是UTF-8编码，火狐是Base64编码，所以要兼容，解决乱码问题。</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;使用servlet完成下载文件&quot;&gt;&lt;a href=&quot;#使用servlet完成下载文件&quot; class=&quot;headerlink&quot; title=&quot;使用servlet完成下载文件&quot;&gt;&lt;/a&gt;使用servlet完成下载文件&lt;/h1&gt;&lt;h2 id=&quot;创建页面&quot;&gt;&lt;a href
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>servlet入门小案例</title>
     <link href="http://yoursite.com/2017/07/04/article6-md/"/>
     <id>http://yoursite.com/2017/07/04/article6-md/</id>
     <published>2017-07-04T03:23:59.000Z</published>
-    <updated>2017-07-04T03:32:21.952Z</updated>
+    <updated>2017-07-04T09:32:43.954Z</updated>
     
-    <content type="html"><![CDATA[<p>#使用servlet完成用户登录 </p>
+    <content type="html"><![CDATA[<p> #使用servlet完成用户登录 </p>
 <h2 id="创建用户登录页面"><a href="#创建用户登录页面" class="headerlink" title="创建用户登录页面"></a>创建用户登录页面</h2><pre><code>&lt;form action=&quot;/web_13/login&quot; method=&quot;post&quot;&gt;
     &lt;input type=&quot;text&quot; name=&quot;name&quot;/&gt; &lt;br&gt;
     &lt;input type=&quot;password&quot; name=&quot;password&quot;/&gt; &lt;br&gt;
@@ -92,8 +185,8 @@ public void doPost(HttpServletRequest request, HttpServletResponse response) thr
     
     <summary type="html">
     
-      &lt;p&gt;#使用servlet完成用户登录 &lt;/p&gt;
-&lt;h2 id=&quot;创建用户登录页面&quot;&gt;&lt;a href=&quot;#创建用户登录页面&quot; class=&quot;headerlink&quot; title=&quot;创建用户登录页面&quot;&gt;&lt;/a&gt;创建用户登录页面&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;form acti
+      &lt;p&gt; #使用servlet完成用户登录 &lt;/p&gt;
+&lt;h2 id=&quot;创建用户登录页面&quot;&gt;&lt;a href=&quot;#创建用户登录页面&quot; class=&quot;headerlink&quot; title=&quot;创建用户登录页面&quot;&gt;&lt;/a&gt;创建用户登录页面&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;form act
     
     </summary>
     
