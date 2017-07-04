@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-27T02:05:53.983Z</updated>
+  <updated>2017-07-04T03:32:21.952Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,93 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>servlet入门小案例</title>
+    <link href="http://yoursite.com/2017/07/04/article6-md/"/>
+    <id>http://yoursite.com/2017/07/04/article6-md/</id>
+    <published>2017-07-04T03:23:59.000Z</published>
+    <updated>2017-07-04T03:32:21.952Z</updated>
+    
+    <content type="html"><![CDATA[<p>#使用servlet完成用户登录 </p>
+<h2 id="创建用户登录页面"><a href="#创建用户登录页面" class="headerlink" title="创建用户登录页面"></a>创建用户登录页面</h2><pre><code>&lt;form action=&quot;/web_13/login&quot; method=&quot;post&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;name&quot;/&gt; &lt;br&gt;
+    &lt;input type=&quot;password&quot; name=&quot;password&quot;/&gt; &lt;br&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;登录&quot;/&gt;
+&lt;/form&gt;
+</code></pre><h2 id="编写servlet"><a href="#编写servlet" class="headerlink" title="编写servlet"></a>编写servlet</h2><pre><code>   package com.itheima.login;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+
+import com.itheima.domain.User;
+import com.itheima.utils.DataSourceUtils;
+/**
+  * 登录控制servlet
+ * @author hao.yuan
+ * @date 2017年7月4日
+ * @version V1.0
+ */
+public class LoginServlet extends HttpServlet {
+@Override
+public void init() throws ServletException {
+    // 在Servletcontext雨中存一个书库count
+    this.getServletContext().setAttribute(&quot;count&quot;, 0);
+}
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        response.getWriter().write(&quot;hello haohao...&quot;);
+    //1 获取前台的数据
+    String name = request.getParameter(&quot;name&quot;);
+    String password = request.getParameter(&quot;password&quot;);
+    // 2. 通过数据库校验 name 和 password 使用c3p0连接池 dbutils操作sql
+    QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+    String sql = &quot;select * from user where name = ? and password = ?&quot;;
+    User user = null ;
+    try {
+         user = qr.query(sql, new BeanHandler&lt;User&gt;(User.class), name,password);
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    if(user !=null){
+        // 用户登录成功 
+        Integer count = (Integer) this.getServletContext().getAttribute(&quot;count&quot;);
+        count++;
+        response.getWriter().write(user.toString() + &quot;---------you are success person:&quot;+count);
+        this.getServletContext().setAttribute(&quot;count&quot;, count);
+    }else{
+        response.getWriter().write(&quot;sorry login fail!&quot;);
+    }
+}
+
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    doGet(request, response);
+}
+}`
+</code></pre><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><pre><code>1.表单提交 form action跳转servlet
+2.servlet中使用getParamater获取参数
+3.servlet作为域对象，使用this.getServletContext().setAttribute(&quot;&quot;,&quot;&quot;)，getAttribute(&quot;&quot;)记录用户登录次数。
+4.使用c3p0连接池连接mysql，使用DBUtils完成查询操作。
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#使用servlet完成用户登录 &lt;/p&gt;
+&lt;h2 id=&quot;创建用户登录页面&quot;&gt;&lt;a href=&quot;#创建用户登录页面&quot; class=&quot;headerlink&quot; title=&quot;创建用户登录页面&quot;&gt;&lt;/a&gt;创建用户登录页面&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;form acti
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>javscript实现可拖拽的盒子</title>
