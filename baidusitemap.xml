@@ -4,14 +4,14 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/07/04/article6-md/</loc>
-    <lastmod>2017-07-04T09:32:43.954Z</lastmod>
+    <loc>http://yoursite.com/2017/07/04/article6/</loc>
+    <lastmod>2017-07-05T05:35:31.459Z</lastmod>
     <data>
         <display>
         <title>servlet入门小案例</title>
         <pubTime>2017-07-04T03:23:59.000Z</pubTime>
         
-        <tag>java</tag>
+        <tag>servlet</tag>
          
          
            
@@ -22,13 +22,13 @@
     
   <url>
     <loc>http://yoursite.com/2017/07/04/article7/</loc>
-    <lastmod>2017-07-04T09:29:38.908Z</lastmod>
+    <lastmod>2017-07-05T05:34:04.905Z</lastmod>
     <data>
         <display>
         <title>使用servlet完成下载（解决中文乱码）</title>
         <pubTime>2017-07-04T09:21:02.000Z</pubTime>
         
-        <tag>java</tag>
+        <tag>servlet</tag>
          
          
            

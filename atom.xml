@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-04T09:29:38.908Z</updated>
+  <updated>2017-07-05T05:34:04.905Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/07/04/article7/"/>
     <id>http://yoursite.com/2017/07/04/article7/</id>
     <published>2017-07-04T09:21:02.000Z</published>
-    <updated>2017-07-04T09:29:38.908Z</updated>
+    <updated>2017-07-05T05:34:04.905Z</updated>
     
     <content type="html"><![CDATA[<h1 id="使用servlet完成下载文件"><a href="#使用servlet完成下载文件" class="headerlink" title="使用servlet完成下载文件"></a>使用servlet完成下载文件</h1><h2 id="创建页面"><a href="#创建页面" class="headerlink" title="创建页面"></a>创建页面</h2><pre><code>&lt;a href=&quot;/web14/download?filename=美女.jpg&quot;&gt;美女.jpg&lt;/a&gt;
 </code></pre><h2 id="书写核心servlet"><a href="#书写核心servlet" class="headerlink" title="书写核心servlet"></a>书写核心servlet</h2><pre><code>package com.itheima.line;
@@ -104,19 +104,18 @@ public void doPost(HttpServletRequest request, HttpServletResponse response) thr
     </summary>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+      <category term="servlet" scheme="http://yoursite.com/tags/servlet/"/>
     
   </entry>
   
   <entry>
     <title>servlet入门小案例</title>
-    <link href="http://yoursite.com/2017/07/04/article6-md/"/>
-    <id>http://yoursite.com/2017/07/04/article6-md/</id>
+    <link href="http://yoursite.com/2017/07/04/article6/"/>
+    <id>http://yoursite.com/2017/07/04/article6/</id>
     <published>2017-07-04T03:23:59.000Z</published>
-    <updated>2017-07-04T09:32:43.954Z</updated>
+    <updated>2017-07-05T05:35:31.459Z</updated>
     
-    <content type="html"><![CDATA[<p> #使用servlet完成用户登录 </p>
-<h2 id="创建用户登录页面"><a href="#创建用户登录页面" class="headerlink" title="创建用户登录页面"></a>创建用户登录页面</h2><pre><code>&lt;form action=&quot;/web_13/login&quot; method=&quot;post&quot;&gt;
+    <content type="html"><![CDATA[<h1 id="使用servlet完成用户登录"><a href="#使用servlet完成用户登录" class="headerlink" title="使用servlet完成用户登录"></a>使用servlet完成用户登录</h1><h2 id="创建用户登录页面"><a href="#创建用户登录页面" class="headerlink" title="创建用户登录页面"></a>创建用户登录页面</h2><pre><code>&lt;form action=&quot;/web_13/login&quot; method=&quot;post&quot;&gt;
     &lt;input type=&quot;text&quot; name=&quot;name&quot;/&gt; &lt;br&gt;
     &lt;input type=&quot;password&quot; name=&quot;password&quot;/&gt; &lt;br&gt;
     &lt;input type=&quot;submit&quot; value=&quot;登录&quot;/&gt;
@@ -185,13 +184,12 @@ public void doPost(HttpServletRequest request, HttpServletResponse response) thr
     
     <summary type="html">
     
-      &lt;p&gt; #使用servlet完成用户登录 &lt;/p&gt;
-&lt;h2 id=&quot;创建用户登录页面&quot;&gt;&lt;a href=&quot;#创建用户登录页面&quot; class=&quot;headerlink&quot; title=&quot;创建用户登录页面&quot;&gt;&lt;/a&gt;创建用户登录页面&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;form act
+      &lt;h1 id=&quot;使用servlet完成用户登录&quot;&gt;&lt;a href=&quot;#使用servlet完成用户登录&quot; class=&quot;headerlink&quot; title=&quot;使用servlet完成用户登录&quot;&gt;&lt;/a&gt;使用servlet完成用户登录&lt;/h1&gt;&lt;h2 id=&quot;创建用户登录页面&quot;&gt;&lt;a 
     
     </summary>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+      <category term="servlet" scheme="http://yoursite.com/tags/servlet/"/>
     
   </entry>
   
