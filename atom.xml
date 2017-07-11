@@ -194,6 +194,90 @@ public void doPost(HttpServletRequest request, HttpServletResponse response) thr
   </entry>
   
   <entry>
+    <title>mvc小案例</title>
+    <link href="http://yoursite.com/2017/07/01/article8/"/>
+    <id>http://yoursite.com/2017/07/01/article8/</id>
+    <published>2017-07-01T01:34:19.000Z</published>
+    <updated>2017-07-11T01:40:37.540Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>使用到的技术<br>servlet<br>jsp<br>el表达式<br>dbUtils<br>c3p0连接池</p>
+</blockquote>
+<h1 id="操作数据库"><a href="#操作数据库" class="headerlink" title="操作数据库"></a>操作数据库</h1><p>创建Dao</p>
+<pre><code>public class ProductDao {
+
+public List&lt;Product&gt; findAllProduct() throws SQLException {
+    // 操作数据库
+    QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+    String sql = &quot;select * from Product&quot;;
+    //一般在service层处理异常
+    List&lt;Product&gt; productList = qr.query(sql, new BeanListHandler&lt;Product&gt;(Product.class));
+    return productList;    
+}        
+}
+</code></pre><h1 id="创建业务处理Service"><a href="#创建业务处理Service" class="headerlink" title="创建业务处理Service"></a>创建业务处理Service</h1><p>创建service</p>
+<pre><code>public class ProductService {
+
+public List&lt;Product&gt; findAllProfuct() {
+    // 传递请求到dao层
+    ProductDao dao = new ProductDao();
+    List&lt;Product&gt; products = null;
+    try {
+         products = dao.findAllProduct();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return products;
+}
+
+}
+</code></pre><h1 id="创建web层Controller"><a href="#创建web层Controller" class="headerlink" title="创建web层Controller"></a>创建web层Controller</h1><p>创建controller</p>
+<pre><code>public class ProductListServlet extends HttpServlet {
+
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // 传递请求到service
+    ProductService service = new ProductService();
+    List&lt;Product&gt; productLists = service.findAllProfuct();
+    // 全部商品存到session域中 
+    request.setAttribute(&quot;productLists&quot;, productLists);
+    // 将数据转发到jsp中处理，使用jstl+el表达式
+    request.getRequestDispatcher(&quot;/product_list.jsp&quot;).forward(request, response);
+}
+
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    doGet(request, response);
+}
+}
+</code></pre><h1 id="前台jsp"><a href="#前台jsp" class="headerlink" title="前台jsp"></a>前台jsp</h1><pre><code>&lt;c:forEach items=&quot;${productLists}&quot; var=&quot;pro&quot;&gt;
+        &lt;div class=&quot;col-md-2&quot;&gt;
+            &lt;a href=&quot;product_info.htm&quot;&gt; &lt;img src=&quot;${pro.pimage}&quot;
+                width=&quot;170&quot; height=&quot;170&quot; style=&quot;display: inline-block;&quot;&gt;
+            &lt;/a&gt;
+            &lt;p&gt;
+                &lt;a href=&quot;product_info.html&quot; style=&apos;color: green&apos;&gt;${pro.pname}&lt;/a&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;font color=&quot;#FF0000&quot;&gt;商城价：&amp;yen;${pro.shop_price}&lt;/font&gt;
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/c:forEach&gt;
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;使用到的技术&lt;br&gt;servlet&lt;br&gt;jsp&lt;br&gt;el表达式&lt;br&gt;dbUtils&lt;br&gt;c3p0连接池&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;操作数据库&quot;&gt;&lt;a href=&quot;#操作数据库&quot; class=&quot;headerlink&quot;
+    
+    </summary>
+    
+    
+      <category term="mvc" scheme="http://yoursite.com/tags/mvc/"/>
+    
+  </entry>
+  
+  <entry>
     <title>javscript实现可拖拽的盒子</title>
     <link href="http://yoursite.com/2017/05/27/new-article5/"/>
     <id>http://yoursite.com/2017/05/27/new-article5/</id>
